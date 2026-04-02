@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Box</title>
+    <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+
+        <img src="logo.svg" class="logo">
+
+        <h1 class="insta-title">Smart Delivery Box</h1>
+
+        <input type="text" id="username" placeholder="Username" class="input-field insta-input">
+
+        <input type="password" id="password" placeholder="Password" class="input-field insta-input">
+
+        <button class="login-btn" onclick="login()">Log in</button>
+
+        <p id="loginError" class="error-text"></p>
+
+    </div>
+    </div>
+    <div id="app" class="phone hidden">
+        <div class="page" id="page1">
+            <div class="page-header">
+                <h1>Delivery Box</h1>
+                <p>Main Control</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card" onclick="showPage('page2')">
+                    <h3>Recent Access</h3>
+                    <div class="access-list" id="recentAccessList">
+                        <div class="empty-state">No recent access</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Security Status</h3>
+                    <div class="status-box" id="lockStatus">NORMAL</div>
+                </div>
+
+                <div class="action-grid">
+                    <div class="action-btn" onclick="showPage('page2')">
+                        <span>History</span>
+                    </div>
+                    <div class="action-btn" onclick="showPage('page3')">
+                        <span>Generate OTP</span>
+                    </div>
+                    <div class="action-btn" onclick="toggleLockout()">
+                        <span id="lockBtn">Lockout</span>
+                    </div>
+                    <div class="action-btn" onclick="showPage('page4')">
+                        <span>Photos</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-arrows">
+                <button class="nav-btn" onclick="prevPage()">←</button>
+                <button class="nav-btn" onclick="nextPage()">→</button>
+            </div>
+        </div>
+
+        <div class="page hidden" id="page2">
+            <div class="page-header">
+                <h1>Access Log</h1>
+                <p>Recent Activity</p>
+            </div>
+
+            <div class="details-grid">
+                <div class="card">
+                    <div class="card-head">
+                        <h3>Past Opens</h3>
+                        <button class="small-btn" onclick="clearAccessLogs(event)">Clear Logs</button>
+                    </div>
+
+                    <div class="history-list" id="historyList">
+                        <div class="empty-state">No access logs yet</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Security Status</h3>
+                    <div class="status-box" id="lockStatusPage2">NORMAL</div>
+                </div>
+            </div>
+
+            <div class="nav-arrows">
+                <button class="nav-btn" onclick="prevPage()">←</button>
+                <button class="nav-btn" onclick="nextPage()">→</button>
+            </div>
+        </div>
+
+        <div class="page hidden" id="page3">
+    <div class="page-header">
+        <h1>OTP Control</h1>
+        <p>Select an option</p>
+    </div>
+
+    <!-- MAIN OPTIONS -->
+    <div class="dashboard-grid" id="otpMainMenu">
+
+        <div class="card" onclick="openOTPMenu()">
+            <h3>Generate OTP / Password</h3>
+            <p class="subtitle">Create new access codes</p>
+        </div>
+
+        <div class="card" onclick="showOTPHistory()">
+            <h3>Generated OTPs</h3>
+            <p class="subtitle">View all previous OTPs</p>
+        </div>
+
+    </div>
+
+    <!-- SUB MENU -->
+    <div class="dashboard-grid hidden" id="otpSubMenu">
+        <div id="otpDisplayBox" class="otp-display-box hidden"></div>
+
+        <div class="card" onclick="generateOTP('food')">
+            <h3>Food Delivery</h3>
+        </div>
+
+        <div class="card" onclick="generateOTP('package')">
+            <h3>Package Delivery</h3>
+        </div>
+
+        <div class="card">
+            <h3>Change Master Password</h3>
+
+            <input type="password" id="newMasterPass" placeholder="New password" class="input-field">
+
+            <button class="action-btn" onclick="changeMasterPassword()">
+                Update
+            </button>
+        </div>
+
+        <button class="small-btn" onclick="goBackToMainOTP()">← Back</button>
+
+    </div>
+
+    <!-- OTP HISTORY -->
+    <div class="dashboard-grid hidden" id="otpHistoryMenu">
+
+        <div class="card">
+            <h3>Food OTPs</h3>
+            <div id="foodHistory"></div>
+        </div>
+
+        <div class="card">
+            <h3>Package OTPs</h3>
+            <div id="packageHistory"></div>
+        </div>
+
+        <button class="small-btn" onclick="goBackToMainOTP()">← Back</button>
+
+    </div>
+
+    <div class="nav-arrows">
+        <button class="nav-btn" onclick="prevPage()">←</button>
+        <button class="nav-btn" onclick="nextPage()">→</button>
+    </div>
+</div>
+
+        <div class="page hidden" id="page4">
+            <div class="page-header">
+                <h1>Photos</h1>
+                <p>Captured images</p>
+            </div>
+
+            <div class="gallery-container">
+                <div class="gallery-grid" id="photoGallery">
+                    <div class="empty-state">No photos found</div>
+                </div>
+            </div>
+
+            <div class="nav-arrows">
+                <button class="nav-btn" onclick="prevPage()">←</button>
+                <button class="nav-btn" onclick="nextPage()">→</button>
+            </div>
+        </div>
+
+        <div class="photo-modal hidden" id="photoModal" onclick="closePhotoModal()">
+            <div class="modal-content">
+                <button class="close-modal">×</button>
+                <img id="modalImage" src="" alt="Photo">
+                <div class="photo-info" id="photoInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
