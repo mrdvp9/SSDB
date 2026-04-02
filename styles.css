@@ -15,10 +15,10 @@ body {
     overflow: hidden;
 }
 .phone {
-    width: 430px;
+    width: 415px;
     max-width: 95vw;
 
-    height: 95vh;   
+    height: 85vh;   
 
     display: flex;
     flex-direction: column;
