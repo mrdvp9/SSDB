@@ -12,11 +12,13 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
 }
 .phone {
     width: 430px;
     max-width: 95vw;
-    height: 100vh;
+
+    height: 95vh;   
 
     display: flex;
     flex-direction: column;
@@ -345,6 +347,19 @@ body {
 
     .logo {
         width: 80px;
+    }
+}
+
+@media (max-height: 750px) {
+    .phone {
+        transform: scale(0.92);
+        transform-origin: top center;
+    }
+}
+
+@media (max-height: 680px) {
+    .phone {
+        transform: scale(0.85);
     }
 }
 
