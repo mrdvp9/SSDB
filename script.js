@@ -189,9 +189,7 @@ function displayPhotos(files) {
 
         item.innerHTML =
             '<img src="' + file.thumbnailLink + '">' +
-            '<div class="photo-overlay">' +
-                '<span class="tag">' + meta.type + '</span>' +
-            '</div>';
+            ''
 
         item.onclick = function() {
             openPhotoModal(
@@ -252,6 +250,11 @@ function fetchAccessLogs() {
 
             var newLogs = Array.isArray(data) ? data : [];
 
+            if (millisOffset === null && newLogs.length > 0) {
+            var latestMs = newLogs[newLogs.length - 1].timestamp;
+            millisOffset = Date.now() - latestMs;
+}
+
             // ✅ detect new logs
             if (newLogs.length > lastLogCount) {
                 for (var i = lastLogCount; i < newLogs.length; i++) {
@@ -304,14 +307,15 @@ function updateDashboardRecentAccess() {
 
 /*>>> formatTime =============================================================*/
 function formatTime(ts) {
-    var d = new Date(ts);
-    var diff = Math.floor((Date.now() - d) / 1000);
+    var realMs = (millisOffset !== null) ? (millisOffset + ts) : Date.now();
+    var d = new Date(realMs);
+    var diff = Math.floor((Date.now() - realMs) / 1000);
 
     if (diff < 60) return 'Just now';
     if (diff < 3600) return Math.floor(diff / 60) + ' mins ago';
     if (diff < 86400) return Math.floor(diff / 3600) + ' hours ago';
 
-    return d.toLocaleDateString();
+    return d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
 }
 
 /*>>> initApp ================================================================*/
