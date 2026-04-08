@@ -22,7 +22,8 @@ var lastLogCount = 0;   // ✅ for notifications
 
 var DRIVE_FOLDER_ID = '1jghyPM951sBjU54vo8-MsDgpvIahOC0R';
 var GOOGLE_API_KEY  = 'AIzaSyDAk8rFYA849BMEo2UJ8Gg3b45lBgtg888';
-var ESP32_IP        = '10.43.35.100';
+var ESP32_IP = '10.199.21.50';  
+//var ESP32_IP = 'esp32.local';
 
 /*>>> showPage ===============================================================*/
 function showPage(pageId) {
@@ -401,5 +402,17 @@ function updateHistoryDisplay() {
         });
     }
 }
+
+function clearAccessLogs(event) {
+    event.stopPropagation();
+    fetch('http://' + ESP32_IP + '/clearlogs')
+        .then(function() {
+            accessLogs = [];
+            lastLogCount = 0;
+            displayAccessLogs();
+            updateDashboardRecentAccess();
+        });
+}
+
 
 document.addEventListener('DOMContentLoaded', initApp);
